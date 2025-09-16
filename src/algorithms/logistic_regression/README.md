@@ -178,52 +178,82 @@ Make sure you have the required dependencies installed (see [Dependencies](#depe
    ```
 
 3. **Execute the cells sequentially** to:
-   - Install and import required libraries
+   - Install and import required libraries (including comprehensive metrics)
    - Load and preprocess the car evaluation dataset
    - Visualize feature distributions and correlations
    - Split the data into train/validation/test sets
    - Train the logistic regression model
-   - Evaluate performance with classification reports and confusion matrices
+   - Evaluate performance with comprehensive metrics, visual analysis, and cross-validation
 
 ### Code Structure:
 ```
 logistic_regression.ipynb
-├── 01. Library Installation
-├── 02. Library Imports
-├── 03. Data Loading and Preprocessing
-├── 04. Data Visualization
-├── 05. Dataset Splitting and Scaling
-└── 06. Logistic Regression Implementation and Evaluation
+├── 01. Library Installation and Imports
+├── 02. Data Loading and Preprocessing
+├── 03. Data Visualization and Exploration
+├── 04. Dataset Splitting and Scaling
+├── 05. Logistic Regression Implementation
+├── 06. Comprehensive Model Evaluation
+│   ├── Basic Classification Metrics (Accuracy, Precision, Recall, F1)
+│   ├── Advanced Metrics (Balanced Accuracy, MCC, Cohen's Kappa)
+│   ├── Probability-based Metrics (ROC-AUC, PR-AUC, Log Loss)
+│   ├── Visual Analysis (ROC Curves, PR Curves for Multi-class)
+│   ├── Cross-Validation with Confidence Intervals
+│   ├── Error Analysis and Confidence Assessment
+│   └── Learning Curve Analysis
+└── 07. Summary and Interpretation
 ```
 
 ### Expected Workflow:
-1. **Data Exploration**: Understand categorical feature distributions
-2. **Preprocessing**: Proper ordinal encoding of categorical variables
-3. **Visualization**: Analyze relationships and correlations
-4. **Model Training**: Fit logistic regression with proper iterations
-5. **Evaluation**: Comprehensive performance analysis
+1. **Data Exploration**: Understand categorical feature distributions and car acceptability patterns
+2. **Preprocessing**: Proper ordinal encoding of categorical variables to preserve relationships
+3. **Visualization**: Analyze feature relationships and class distributions
+4. **Model Training**: Fit logistic regression with proper iterations for convergence
+5. **Evaluation**: Comprehensive performance analysis across multiple metrics and visualizations
 
 ## Results
 
-The implementation provides comprehensive evaluation metrics:
+The implementation provides comprehensive evaluation metrics to thoroughly assess model performance:
 
-- **Classification Reports**: Precision, recall, F1-score for all 4 classes
-- **Validation Performance**: Model evaluation on unseen validation data
-- **Test Performance**: Final model evaluation on test data
-- **Confusion Matrices**: Visual representation of prediction accuracy per class
-- **Correlation Analysis**: Understanding feature relationships
+### Basic Performance Metrics:
+- **Accuracy**: Overall classification accuracy on validation and test sets
+- **Precision**: Proportion of positive predictions that are correct (per class and weighted)
+- **Recall (Sensitivity)**: Proportion of actual positives correctly identified (per class and weighted)
+- **F1-Score**: Harmonic mean of precision and recall (per class and weighted)
+- **Balanced Accuracy**: Accuracy adjusted for class imbalance
+- **Matthews Correlation Coefficient (MCC)**: Balanced measure considering all confusion matrix elements
+
+### Advanced Evaluation:
+- **Cohen's Kappa**: Inter-rater reliability accounting for chance agreement
+- **ROC-AUC (One-vs-Rest)**: Area under the Receiver Operating Characteristic curve for multi-class
+- **Average Precision (PR-AUC)**: Area under Precision-Recall curve (better for imbalanced data)
+- **Log Loss**: Probabilistic loss function measuring prediction uncertainty
+
+### Visual Analysis:
+- **ROC Curves (Multi-class)**: True vs False Positive Rate for each class vs rest
+- **Precision-Recall Curves (Multi-class)**: Precision vs Recall trade-off for each class
+- **Feature Distribution Plots**: KDE plots showing feature distributions by car acceptability class
+- **Learning Curves**: Training and validation scores vs training set size
+
+### Statistical Validation:
+- **Cross-Validation**: 5-fold stratified cross-validation with confidence intervals
+- **Error Analysis**: Detailed analysis of misclassified samples by car acceptability class
+- **Confidence Analysis**: Analysis of prediction confidence for correct vs incorrect classifications
+- **Performance Stability**: Multiple metrics to ensure robust evaluation
 
 ### Expected Performance:
-- Logistic regression should perform well on this dataset due to the clear ordinal relationships
-- The model will likely excel at identifying unacceptable cars (majority class)
-- Performance on minority classes (good, v-good) may be limited due to class imbalance
-- Feature coefficients will provide insights into which attributes most influence car acceptability
+- Logistic regression should perform well on this dataset due to clear ordinal relationships in features
+- The model will likely excel at identifying unacceptable cars (majority class - 70% of data)
+- Performance on minority classes (good: 4%, v-good: 3.8%) may be limited due to severe class imbalance
+- Cross-validation provides confidence intervals for performance estimates
+- Feature coefficients provide insights into which car attributes most influence acceptability decisions
 
 ### Performance Characteristics:
-- **Fast training**: Very quick to train even on larger datasets
-- **Interpretable results**: Clear understanding of feature importance
-- **Probabilistic output**: Confidence estimates for each prediction
-- **Good baseline**: Solid performance for comparison with complex models
+- **Fast Training**: Very quick to train even on larger datasets
+- **Interpretable Results**: Clear understanding of feature importance through coefficients
+- **Probabilistic Output**: Confidence estimates for each prediction class
+- **Robust Evaluation**: Multiple complementary metrics provide comprehensive assessment
+- **Multi-class Handling**: Effective One-vs-Rest strategy for handling 4-class problem
 
 ## Dependencies
 
@@ -236,6 +266,12 @@ seaborn>=0.11.0
 
 # Machine Learning
 scikit-learn>=1.0.0
+
+# Additional metrics and evaluation
+# (included in scikit-learn):
+# - sklearn.metrics for comprehensive evaluation
+# - sklearn.model_selection for cross-validation
+# - sklearn.preprocessing for data processing and binarization
 ```
 
 ### Installation:

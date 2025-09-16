@@ -167,12 +167,20 @@ Make sure you have the required dependencies installed (see [Dependencies](#depe
 ### Code Structure:
 ```
 naive_bayes.ipynb
-├── 01. Library Installation
-├── 02. Library Imports
-├── 03. Data Loading and Preprocessing
-├── 04. Data Visualization
-├── 05. Dataset Splitting and Scaling
-└── 06. Naive Bayes Implementation and Evaluation
+├── 01. Library Installation and Imports
+├── 02. Data Loading and Preprocessing
+├── 03. Data Visualization and Exploration
+├── 04. Dataset Splitting and Scaling
+├── 05. Naive Bayes Implementation
+├── 06. Comprehensive Model Evaluation
+│   ├── Basic Classification Metrics (Accuracy, Precision, Recall, F1)
+│   ├── Advanced Metrics (Balanced Accuracy, MCC, Cohen's Kappa)
+│   ├── Probability-based Metrics (ROC-AUC, PR-AUC, Log Loss)
+│   ├── Visual Analysis (ROC Curves, PR Curves)
+│   ├── Cross-Validation with Confidence Intervals
+│   ├── Error Analysis and Confidence Assessment
+│   └── Learning Curve Analysis
+└── 07. Summary and Interpretation
 ```
 
 ### Expected Workflow:
@@ -183,22 +191,44 @@ naive_bayes.ipynb
 
 ## Results
 
-The implementation provides comprehensive evaluation metrics:
+The implementation provides comprehensive evaluation metrics to thoroughly assess model performance:
 
-- **Classification Reports**: Precision, recall, F1-score for both classes
-- **Validation Performance**: Model evaluation on unseen validation data
-- **Test Performance**: Final model evaluation on test data
-- **Class Distribution Visualization**: KDE plots showing feature distributions
+### Basic Performance Metrics:
+- **Accuracy**: Overall classification accuracy on validation and test sets
+- **Precision**: Proportion of positive predictions that are correct (per class)
+- **Recall (Sensitivity)**: Proportion of actual positives correctly identified (per class)
+- **F1-Score**: Harmonic mean of precision and recall (per class)
+- **Balanced Accuracy**: Accuracy adjusted for class imbalance
+- **Matthews Correlation Coefficient (MCC)**: Balanced measure considering all confusion matrix elements
+
+### Advanced Evaluation:
+- **Cohen's Kappa**: Inter-rater reliability accounting for chance agreement
+- **ROC-AUC**: Area under the Receiver Operating Characteristic curve
+- **Average Precision (PR-AUC)**: Area under Precision-Recall curve (better for imbalanced data)
+- **Log Loss**: Probabilistic loss function measuring prediction uncertainty
+
+### Visual Analysis:
+- **ROC Curves**: True Positive Rate vs False Positive Rate for validation and test sets
+- **Precision-Recall Curves**: Precision vs Recall trade-off visualization
+- **Feature Distribution Plots**: KDE plots showing RGB distributions by class
+- **Learning Curves**: Training and validation scores vs training set size
+
+### Statistical Validation:
+- **Cross-Validation**: 5-fold stratified cross-validation with confidence intervals
+- **Error Analysis**: Detailed analysis of misclassified samples and confidence levels
+- **Performance Stability**: Multiple metrics to ensure robust evaluation
 
 ### Expected Performance:
-- Naive Bayes typically performs well on this dataset due to the distinct RGB patterns between skin and non-skin pixels
-- The class imbalance is addressed through oversampling during training
+- Naive Bayes typically performs well on this dataset due to distinct RGB patterns between skin and non-skin pixels
+- The class imbalance is addressed through oversampling during training and appropriate metric selection
+- Cross-validation provides confidence intervals for performance estimates
 - Feature scaling helps with visualization but doesn't affect Naive Bayes performance significantly
 
 ### Performance Characteristics:
 - **High Speed**: Very fast training and prediction
-- **Good Baseline**: Provides strong baseline performance for comparison
+- **Good Baseline**: Provides strong baseline performance for comparison with other algorithms
 - **Interpretable**: Easy to understand which RGB ranges correspond to skin pixels
+- **Robust Evaluation**: Multiple complementary metrics provide comprehensive assessment
 
 ## Dependencies
 
@@ -212,6 +242,12 @@ seaborn>=0.11.0
 # Machine Learning
 scikit-learn>=1.0.0
 imbalanced-learn>=0.8.0
+
+# Additional metrics and evaluation
+# (included in scikit-learn):
+# - sklearn.metrics for comprehensive evaluation
+# - sklearn.model_selection for cross-validation
+# - sklearn.preprocessing for data scaling
 ```
 
 ### Installation:

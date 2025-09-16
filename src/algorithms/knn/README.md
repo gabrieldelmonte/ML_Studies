@@ -1,6 +1,6 @@
-# k-Nearest Neighbors (kNN) Implementation
+# k-Nearest Neighbors (kNN) Implementation with Comprehensive Metrics
 
-This directory contains a comprehensive implementation of the k-Nearest Neighbors algorithm using the MAGIC Gamma Telescope Dataset for binary classification.
+This directory contains a comprehensive implementation of the k-Nearest Neighbors algorithm using the MAGIC Gamma Telescope Dataset for binary classification, featuring extensive evaluation metrics and analysis techniques.
 
 ## Table of Contents
 1. [Algorithm Overview](#algorithm-overview)
@@ -106,13 +106,22 @@ This implementation uses the **MAGIC Gamma Telescope Dataset** from the UCI Mach
 ### Model Configuration:
 - **Algorithm**: scikit-learn's KNeighborsClassifier
 - **Distance Metric**: Euclidean distance (default)
-- **k values tested**: 1, 3, 5 neighbors
+- **k values tested**: 1, 3, 5 neighbors (basic evaluation)
+- **k optimization range**: 1-20 neighbors (systematic analysis)
+- **Cross-validation**: 5-fold stratified cross-validation
+- **Performance metrics**: 15+ different evaluation metrics
 
 ### Key Implementation Features:
-- Comprehensive data visualization with histograms by class
+- Comprehensive data visualization with histograms and correlation matrix
 - Modular scaling and oversampling function
-- Multiple k-value evaluation
-- Detailed classification reports for both validation and test sets
+- Multiple k-value evaluation with systematic optimization
+- Individual cells for each metric calculation
+- Detailed classification reports for validation and test sets
+- ROC and Precision-Recall curve visualizations
+- Cross-validation analysis with confidence intervals
+- Error analysis and prediction confidence evaluation
+- Learning curve analysis for data sufficiency assessment
+- Bias-variance trade-off visualization
 
 ## Usage
 
@@ -132,37 +141,88 @@ Make sure you have the required dependencies installed (see [Dependencies](#depe
    ```
 
 3. **Execute the cells sequentially** to:
-   - Install and import required libraries
+   - Install and import required libraries (including advanced metrics)
    - Load and preprocess the dataset
-   - Visualize feature distributions
-   - Split and scale the data
+   - Visualize feature distributions and correlations
+   - Split and scale the data with oversampling
    - Train kNN models with different k values
-   - Evaluate model performance
+   - Calculate comprehensive performance metrics
+   - Generate ROC and Precision-Recall curves
+   - Perform cross-validation analysis
+   - Conduct error analysis and confidence evaluation
+   - Analyze learning curves and k-value optimization
+   - Visualize bias-variance trade-offs
 
 ### Code Structure:
 ```
-knn.ipynb
+knn.ipynb / METRICS_knn.ipynb
 ├── 01. Library Installation
-├── 02. Library Imports
+├── 02. Library Imports (with additional metrics)
 ├── 03. Data Loading and Preprocessing
 ├── 04. Data Visualization
 ├── 05. Dataset Splitting and Scaling
-└── 06. kNN Implementation and Evaluation
+├── 06. kNN Implementation and Evaluation
+│   ├── Basic kNN with k=1,3,5
+│   ├── Optimal k using rule of thumb
+│   ├── Classification reports and confusion matrices
+│   ├── Individual metric calculations (accuracy, precision, recall, F1)
+│   ├── Advanced metrics (balanced accuracy, MCC, Cohen's kappa)
+│   ├── Probability-based metrics (ROC AUC, PR AUC, log loss)
+│   ├── ROC and Precision-Recall curve visualizations
+│   ├── Cross-validation analysis (5-fold for multiple metrics)
+│   ├── Error analysis and confidence evaluation
+│   ├── Learning curve analysis
+│   ├── K-value optimization (k=1 to k=20)
+│   └── K-value analysis visualization
+└── 07. Summary and Interpretation of Additional Metrics
 ```
 
 ## Results
 
-The implementation evaluates kNN performance with k=1, k=3, and k=5 neighbors, providing:
+The implementation provides a comprehensive evaluation of kNN performance using multiple metrics and analysis techniques:
 
-- **Classification Reports**: Precision, recall, F1-score for both classes
-- **Validation Performance**: Model evaluation on unseen validation data
-- **Test Performance**: Final model evaluation on test data
-- **Class Distribution Analysis**: Visual comparison of feature distributions between gamma and hadron classes
+### Basic Performance Metrics:
+- **Accuracy**: Overall classification accuracy on validation and test sets
+- **Precision**: Class-specific and weighted precision scores
+- **Recall**: Class-specific and weighted recall scores  
+- **F1-Score**: Class-specific and weighted F1-scores
+- **Balanced Accuracy**: Accounts for class imbalance better than standard accuracy
+
+### Advanced Metrics:
+- **Matthews Correlation Coefficient (MCC)**: Correlation between predictions and reality (-1 to +1)
+- **Cohen's Kappa**: Inter-rater reliability accounting for chance agreement
+- **ROC AUC**: Area under ROC curve measuring discriminative ability
+- **Average Precision (PR AUC)**: Area under Precision-Recall curve, ideal for imbalanced datasets
+- **Log Loss**: Quantifies prediction uncertainty using probability scores
+
+### Visual Analysis:
+- **ROC Curves**: True vs False Positive Rate trade-offs for validation and test sets
+- **Precision-Recall Curves**: Precision vs Recall trade-offs, better for imbalanced data
+- **Learning Curves**: Performance vs training set size to assess data sufficiency
+- **K-Value Optimization Plots**: Systematic analysis of different k values (1-20)
+
+### Cross-Validation Analysis:
+- **5-Fold Stratified Cross-Validation** with confidence intervals for:
+  - Accuracy, Precision, Recall, F1-Score, ROC AUC scores
+  - Mean performance ± 2 standard deviations
+  - Individual fold performance tracking
+
+### Error Analysis:
+- **Misclassification Patterns**: Analysis by true class (Hadron vs Gamma)
+- **Confidence Analysis**: Average confidence of correct vs incorrect predictions
+- **Error Rates**: Detailed breakdown of classification errors
+
+### Hyperparameter Optimization:
+- **K-Value Analysis**: Systematic evaluation of k=1 to k=20
+- **Multiple Metric Optimization**: Finding optimal k for accuracy, F1-score, and ROC AUC
+- **Bias-Variance Trade-off**: Visualization of training vs validation performance gap
 
 ### Expected Performance:
-- kNN typically performs well on this dataset due to the clear separation between gamma and hadron classes in the feature space
-- Feature scaling is crucial for good performance
-- Oversampling helps address class imbalance in the training data
+- kNN achieves excellent performance on this dataset due to clear feature separation
+- Feature scaling is crucial for optimal results
+- Oversampling effectively addresses class imbalance
+- Optimal k values typically range from 3-7 for this dataset
+- Cross-validation confirms robust and reliable performance
 
 ## Dependencies
 
@@ -183,10 +243,19 @@ imbalanced-learn>=0.8.0
 ## Educational Notes
 
 This implementation serves as an excellent introduction to:
-- **Classification algorithms**: Understanding supervised learning
-- **Data preprocessing**: Feature scaling and handling class imbalance
-- **Model evaluation**: Using validation sets and classification metrics
-- **Hyperparameter tuning**: Finding optimal k values
-- **Data visualization**: Understanding feature distributions
+- **Classification algorithms**: Understanding supervised learning with comprehensive evaluation
+- **Data preprocessing**: Feature scaling and handling class imbalance with oversampling
+- **Model evaluation**: Multiple metrics beyond accuracy for robust assessment
+- **Performance visualization**: ROC curves, PR curves, and learning curves
+- **Cross-validation**: Reliable performance estimation with confidence intervals
+- **Hyperparameter tuning**: Systematic k-value optimization with multiple criteria
+- **Error analysis**: Understanding model failures and prediction confidence
+- **Bias-variance trade-off**: Visualizing the impact of model complexity
+- **Metric selection**: Choosing appropriate metrics for different problem types
 
-The kNN algorithm is particularly valuable for beginners because of its intuitive nature and the ability to visualize decision boundaries in low-dimensional spaces.
+The kNN algorithm combined with comprehensive evaluation provides valuable insights into:
+- How different metrics can reveal different aspects of model performance
+- The importance of using multiple evaluation techniques
+- How to systematically optimize hyperparameters
+- The relationship between training data size and performance
+- The trade-offs between model complexity and generalization
